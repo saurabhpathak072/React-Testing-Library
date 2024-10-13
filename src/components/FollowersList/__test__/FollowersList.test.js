@@ -1,5 +1,5 @@
 import React from "react";  
-import { getByTestId, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
 import FollowersList from '../FollowersList'
 import { MemoryRouter } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
@@ -77,6 +77,33 @@ describe('Followers List', () => {
             const {findAllByTestId} = render(<MockFollowersList/>);
             const divElement = await findAllByTestId(/follower-item/i); 
             expect(divElement.length).toBe(1);
+        });
+        
+    });
+    
+    describe('Test Shallow copy', () => {
+        it('Test copy', async () => {
+            axios.get.mockResolvedValue(mockData)
+            await act(async ()=>{
+                 render(<MockFollowersList/>);
+            })
+       
+        
+            const cityElement1 = screen.getByText(/City :/i);
+            expect(cityElement1).toBeInTheDocument();
+
+            const updateBtn  = screen.getByText(/Update/i);
+            expect(updateBtn).toBeInTheDocument();
+
+
+            fireEvent.click(updateBtn);
+            const cityElement2 = screen.getByText(/City :/i);
+            expect(cityElement1).toBe(cityElement2)
+            // const updateButton = screen.getByText(/City/i);
+            // expect(updateButton).toBeInTheDocument();
+
+            // fireEvent.click(updateButton)
+
         });
         
     });
