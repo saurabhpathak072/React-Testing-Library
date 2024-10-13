@@ -5,15 +5,6 @@ import { Link } from 'react-router-dom';
 
 export default function FollowersList() {
   const [followers, setFollowers] = useState([]);
-  const [original] = useState({
-    name: 'original Text',
-    age: 18,
-    address: {
-      pinCode: 411006,
-      area: 'Pune',
-    },
-  });
-
   const [user, setUser] = useState({
     name: 'John Doe',
     address: {
@@ -21,9 +12,6 @@ export default function FollowersList() {
         zip: '10001'
     }
 });
-
-
-  const [duplicate, setDuplicate] = useState('');
 
   useEffect(() => {
     fetchFollowers();
@@ -34,12 +22,7 @@ export default function FollowersList() {
     setFollowers(data.results);
   };
 
-  const copyObjectHandler=()=>{
-
-    setDuplicate({
-        ...original
-    })
-  }
+ 
 
   const updateCity = () => {
     // Shallow copy of the user object
